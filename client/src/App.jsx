@@ -42,25 +42,25 @@ import UserDetails from "./pages/admin/UserDetails";
 import NotFound from "./pages/misc/NotFound";
 
 const PAGE_TITLES = {
-  "/": "TiffinBox | Fresh Home Meals",
-  "/how-it-works": "How It Works | TiffinBox",
-  "/policy": "Privacy Policy | TiffinBox",
-  "/terms-and-conditions": "Terms & Conditions | TiffinBox",
-  "/banned": "Account Restricted | TiffinBox",
-  "/login": "Login | TiffinBox",
-  "/register": "Register | TiffinBox",
-  "/forgot-password": "Forgot Password | TiffinBox",
-  "/verify-otp": "Verify OTP | TiffinBox",
-  "/reset-password": "Reset Password | TiffinBox",
-  "/home": "Home | TiffinBox",
-  "/orders/place": "Place Order | TiffinBox",
-  "/orders/my": "My Orders | TiffinBox",
-  "/cook/setup": "Cook Profile Setup | TiffinBox",
-  "/cook/dashboard": "Cook Dashboard | TiffinBox",
-  "/cook/post-menu": "Post Menu | TiffinBox",
-  "/cook/orders": "Cook Orders | TiffinBox",
-  "/admin/dashboard": "Admin Dashboard | TiffinBox",
-  "/admin/pending-cooks": "Pending Cooks | TiffinBox",
+  "/": "Tiffinity | Fresh Home Meals",
+  "/how-it-works": "How It Works | Tiffinity",
+  "/policy": "Privacy Policy | Tiffinity",
+  "/terms-and-conditions": "Terms & Conditions | Tiffinity",
+  "/banned": "Account Restricted | Tiffinity",
+  "/login": "Login | Tiffinity",
+  "/register": "Register | Tiffinity",
+  "/forgot-password": "Forgot Password | Tiffinity",
+  "/verify-otp": "Verify OTP | Tiffinity",
+  "/reset-password": "Reset Password | Tiffinity",
+  "/home": "Home | Tiffinity",
+  "/orders/place": "Place Order | Tiffinity",
+  "/orders/my": "My Orders | Tiffinity",
+  "/cook/setup": "Cook Profile Setup | Tiffinity",
+  "/cook/dashboard": "Cook Dashboard | Tiffinity",
+  "/cook/post-menu": "Post Menu | Tiffinity",
+  "/cook/orders": "Cook Orders | Tiffinity",
+  "/admin/dashboard": "Admin Dashboard | Tiffinity",
+  "/admin/pending-cooks": "Pending Cooks | Tiffinity",
 };
 
 function TitleManager() {
@@ -68,16 +68,16 @@ function TitleManager() {
 
   useEffect(() => {
     if (pathname.startsWith("/cook/")) {
-      document.title = "Cook Profile | TiffinBox";
+      document.title = "Cook Profile | Tiffinity";
       return;
     }
 
     if (pathname.startsWith("/admin/users/")) {
-      document.title = "User Details | TiffinBox";
+      document.title = "User Details | Tiffinity";
       return;
     }
 
-    document.title = PAGE_TITLES[pathname] || "TiffinBox";
+    document.title = PAGE_TITLES[pathname] || "Tiffinity";
   }, [pathname]);
 
   return null;
@@ -88,19 +88,19 @@ function App() {
     <BrowserRouter>
       <TitleManager />
       <Routes>
-        <Route path='/' element={<Landing />} />
-        <Route path='/how-it-works' element={<HowItWorks />} />
+        <Route path="/" element={<Landing />} />
+        <Route path="/how-it-works" element={<HowItWorks />} />
         {/* <Route path='/help-center' element={<HelpCenter />} /> */}
-        <Route path='/policy' element={<Policy />} />
-        <Route path='/terms-and-conditions' element={<TermsAndConditions />} />
+        <Route path="/policy" element={<Policy />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/fix-my-itch" element={<FixMyItchPage />} />
 
         {/* ── Banned Route ── */}
-        <Route path='/banned' element={<BannedPage />} />
+        <Route path="/banned" element={<BannedPage />} />
 
         {/* ── Guest Only Routes (redirect if logged in) ── */}
         <Route
-          path='/login'
+          path="/login"
           element={
             <GuestRoute>
               <Login />
@@ -108,7 +108,7 @@ function App() {
           }
         />
         <Route
-          path='/register'
+          path="/register"
           element={
             <GuestRoute>
               <Register />
@@ -116,7 +116,7 @@ function App() {
           }
         />
         <Route
-          path='/forgot-password'
+          path="/forgot-password"
           element={
             <GuestRoute>
               <ForgotPassword />
@@ -126,7 +126,7 @@ function App() {
 
         {/* ── Reset Password Routes (only accessible if reset flow is initiated) ── */}
         <Route
-          path='/verify-otp'
+          path="/verify-otp"
           element={
             <ResetRoute>
               <VerifyOTP />
@@ -134,7 +134,7 @@ function App() {
           }
         />
         <Route
-          path='/reset-password'
+          path="/reset-password"
           element={
             <ResetRoute>
               <ResetPassword />
@@ -144,7 +144,7 @@ function App() {
 
         {/* ── Customer Routes ── */}
         <Route
-          path='/home'
+          path="/home"
           element={
             <ProtectedRoute roles={["customer"]}>
               <Home />
@@ -152,7 +152,7 @@ function App() {
           }
         />
         <Route
-          path='/cook/:id'
+          path="/cook/:id"
           element={
             <ProtectedRoute roles={["customer"]}>
               <CookPublicProfile />
@@ -160,7 +160,7 @@ function App() {
           }
         />
         <Route
-          path='/orders/place'
+          path="/orders/place"
           element={
             <ProtectedRoute roles={["customer"]}>
               <PlaceOrder />
@@ -168,7 +168,7 @@ function App() {
           }
         />
         <Route
-          path='/orders/my'
+          path="/orders/my"
           element={
             <ProtectedRoute roles={["customer"]}>
               <OrderHistory />
@@ -178,7 +178,7 @@ function App() {
 
         {/* ── Cook Routes ── */}
         <Route
-          path='/cook/setup'
+          path="/cook/setup"
           element={
             <ProtectedRoute roles={["cook"]}>
               <CookProfileSetup />
@@ -186,7 +186,7 @@ function App() {
           }
         />
         <Route
-          path='/cook/dashboard'
+          path="/cook/dashboard"
           element={
             <ProtectedRoute roles={["cook"]}>
               <CookDashboard />
@@ -194,7 +194,7 @@ function App() {
           }
         />
         <Route
-          path='/cook/post-menu'
+          path="/cook/post-menu"
           element={
             <ProtectedRoute roles={["cook"]}>
               <PostMenu />
@@ -202,7 +202,7 @@ function App() {
           }
         />
         <Route
-          path='/cook/orders'
+          path="/cook/orders"
           element={
             <ProtectedRoute roles={["cook"]}>
               <CookOrders />
@@ -212,7 +212,7 @@ function App() {
 
         {/* ── Admin Routes ── */}
         <Route
-          path='/admin/dashboard'
+          path="/admin/dashboard"
           element={
             <ProtectedRoute roles={["admin"]}>
               <AdminDashboard />
@@ -220,7 +220,7 @@ function App() {
           }
         />
         <Route
-          path='/admin/pending-cooks'
+          path="/admin/pending-cooks"
           element={
             <ProtectedRoute roles={["admin"]}>
               <PendingCooks />
@@ -228,7 +228,7 @@ function App() {
           }
         />
         <Route
-          path='/admin/users/:id'
+          path="/admin/users/:id"
           element={
             <ProtectedRoute roles={["admin"]}>
               <UserDetails />
@@ -236,7 +236,7 @@ function App() {
           }
         />
         {/* ── 404 ── */}
-        <Route path='*' element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
