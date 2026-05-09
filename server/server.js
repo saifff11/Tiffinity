@@ -23,7 +23,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://tiffinity.vercel.app"],
+    origin: ["http://localhost:5173", "https://tiffinityweb.vercel.app/"],
     credentials: true,
   }),
 );
