@@ -97,7 +97,7 @@ function OrderHistory() {
       pending: {
         bg: "var(--surface-container-high)",
         color: "var(--outline)",
-        label: "Pending",
+        label: "Awaiting Cook",
       },
     };
     return map[status] || map.pending;
@@ -311,7 +311,10 @@ function OrderHistory() {
                               style={{ color: "var(--primary-container)" }}>
                               ₹{order.totalAmount}
                             </strong>{" "}
-                            · COD
+                            ·{" "}
+                            {order.paymentStatus === "paid"
+                              ? "Paid online"
+                              : "Payment pending"}
                           </div>
                           <div
                             style={{

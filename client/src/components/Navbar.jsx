@@ -25,6 +25,7 @@ const ROLE_NAV_LINKS = {
   ],
   admin: [
     { label: "Pending Cooks", path: "/admin/pending-cooks", icon: Users },
+    { label: "All Orders", path: "/admin/orders", icon: ListOrdered },
   ],
 };
 

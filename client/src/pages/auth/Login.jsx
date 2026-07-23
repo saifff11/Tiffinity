@@ -76,6 +76,7 @@ function Login() {
                   className='inp-field'
                   type='email'
                   name='email'
+                  autoComplete='email'
                   value={formData.email}
                   onChange={handleChange}
                   placeholder='you@example.com'
@@ -113,6 +114,7 @@ function Login() {
                   className='inp-field'
                   type='password'
                   name='password'
+                  autoComplete='current-password'
                   value={formData.password}
                   onChange={handleChange}
                   placeholder='••••••••'

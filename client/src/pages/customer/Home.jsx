@@ -23,17 +23,20 @@ function Home() {
   const [menus, setMenus] = useState([]);
   const [loading, setLoading] = useState(true);
   const [mealType, setMealType] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchMenus = async () => {
       setLoading(true);
+      setError("");
       try {
         const { data } = await axiosInstance.get(
           `/menu/all?mealType=${mealType}`,
         );
         setMenus(data.menus);
       } catch (err) {
-        void err;
+        setError(err.response?.data?.message || "Unable to load nearby menus");
+        setMenus([]);
       } finally {
         setLoading(false);
       }
@@ -67,7 +70,7 @@ function Home() {
             </span>
           </div>
           <div className='dashboard-subtitle text-sm sm:text-base'>
-            Fresh meals available today
+            Fresh meals available today in {user?.city || "your city"}
           </div>
         </div>
 
@@ -114,7 +117,11 @@ function Home() {
         </div>
 
         {/* ── States ── */}
-        {loading ? (
+        {error ? (
+          <div className='error-box' style={{ marginBottom: "20px" }}>
+            {error}
+          </div>
+        ) : loading ? (
           <div
             style={{
               display: "flex",
@@ -171,14 +178,16 @@ function Home() {
                 letterSpacing: "-0.02em",
                 marginBottom: "6px",
               }}>
-              No {mealType} menus right now
+              No {mealType || "meal"} menus in {user?.city || "your city"} right
+              now
             </div>
             <div
               style={{
                 fontSize: "clamp(0.72rem, 2.1vw, 0.8125rem)",
                 color: "var(--outline)",
               }}>
-              Check back later or try switching meal type
+              Check back later, try switching meal type, or explore again after
+              nearby cooks post menus
             </div>
           </div>
         ) : (

@@ -41,8 +41,30 @@ const orderSchema = new mongoose.Schema({
   },
   paymentStatus: {
     type: String,
-    enum: ['pending', 'paid'],
+    enum: ['pending', 'paid', 'failed'],
     default: 'pending'
+  },
+  paymentId: {
+    type: String,
+    default: ''
+  },
+  razorpayOrderId: {
+    type: String,
+    default: ''
+  },
+  razorpaySignature: {
+    type: String,
+    default: ''
+  },
+  acceptedAt: {
+    type: Date
+  },
+  rejectedAt: {
+    type: Date
+  },
+  rejectionReason: {
+    type: String,
+    default: ''
   },
   isReviewed: {
     type: Boolean,

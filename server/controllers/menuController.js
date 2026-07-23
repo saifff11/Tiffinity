@@ -8,6 +8,10 @@ const getTodayDate = () => {
   return getTodayDateInIST()
 }
 
+const escapeRegex = (value) => {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
 // Helper — validate cutoff time based on meal type
 const validateCutoffTime = (mealType, cutoffTime) => {
   const [hours, minutes] = cutoffTime.split(':').map(Number)
@@ -164,16 +168,22 @@ export const deleteMenu = async (req, res) => {
   }
 }
 
-// @desc    Get all active menus
+// @desc    Get all active menus in logged-in customer's city
 // @route   GET /api/menu/all?mealType=lunch
 export const getAllMenus = async (req, res) => {
   try {
     const { mealType } = req.query
+    const customerCity = req.user?.city?.trim()
     const today = getTodayDate()
+
+    if (!customerCity) {
+      return res.status(400).json({ message: 'Customer city is required to find nearby meals' })
+    }
 
     const cooks = await CookProfile.find({
       isVerified: true,
-      isAvailable: true
+      isAvailable: true,
+      city: { $regex: `^${escapeRegex(customerCity)}$`, $options: 'i' }
     }).populate('userId', 'name')
 
     const cookIds = cooks.map(c => c._id)

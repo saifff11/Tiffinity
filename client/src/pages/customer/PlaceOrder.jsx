@@ -1,14 +1,30 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import axiosInstance from "../../utils/axiosInstance";
 import Alert from "../../components/Alert";
 import { validateOrder } from "../../utils/validate";
-import { ArrowLeft, Banknote, Minus, Plus } from "lucide-react";
+import { ArrowLeft, CreditCard, Minus, Plus } from "lucide-react";
+
+const loadRazorpayScript = () =>
+  new Promise((resolve) => {
+    if (window.Razorpay) {
+      resolve(true);
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
 
 function PlaceOrder() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const { menuId, dishIndex, dish } = state || {};
+  const user = useSelector((store) => store.auth.user);
 
   const [quantity, setQuantity] = useState(1);
   const [deliveryAddress, setDeliveryAddress] = useState("");
@@ -22,20 +38,92 @@ function PlaceOrder() {
     e.preventDefault();
     const validationError = validateOrder(deliveryAddress);
     if (validationError) return setError(validationError);
+
+    const scriptLoaded = await loadRazorpayScript();
+    if (!scriptLoaded) {
+      setError("Unable to load Razorpay checkout. Please check your internet connection.");
+      return;
+    }
+
     setLoading(true);
     setError("");
+
     try {
-      await axiosInstance.post("/orders", {
+      const { data } = await axiosInstance.post("/orders", {
         menuId,
         dishIndex,
         quantity,
         deliveryAddress,
       });
-      setSuccess("Order placed successfully!");
-      setTimeout(() => navigate("/orders/my"), 1500);
+
+      const cancelPendingOrder = async () => {
+        try {
+          await axiosInstance.put(`/orders/${data.order._id}/cancel`);
+        } catch {
+          // The order may already be verified or cancelled.
+        }
+      };
+
+      const options = {
+        key: data.keyId,
+        amount: data.razorpayOrder.amount,
+        currency: data.razorpayOrder.currency,
+        name: "Tiffinity",
+        description: `${dish?.name} x ${quantity}`,
+        order_id: data.razorpayOrder.id,
+        prefill: {
+          name: user?.name || "",
+          email: user?.email || "",
+          contact: user?.phone || "",
+        },
+        notes: {
+          deliveryAddress,
+          tiffinityOrderId: data.order._id,
+        },
+        theme: {
+          color: "#e11d48",
+        },
+        handler: async (response) => {
+          try {
+            await axiosInstance.post("/orders/verify-payment", {
+              orderId: data.order._id,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            });
+
+            setSuccess("Payment successful! Your order is confirmed.");
+            setTimeout(() => navigate("/orders/my"), 1200);
+          } catch (err) {
+            setError(
+              err.response?.data?.message ||
+                "Payment was captured but verification failed. Please contact support.",
+            );
+          } finally {
+            setLoading(false);
+          }
+        },
+        modal: {
+          ondismiss: async () => {
+            await cancelPendingOrder();
+            setLoading(false);
+            setError("Payment cancelled. Your order was not placed.");
+          },
+        },
+      };
+
+      const razorpay = new window.Razorpay(options);
+      razorpay.on("payment.failed", async (response) => {
+        await cancelPendingOrder();
+        setLoading(false);
+        setError(
+          response.error?.description ||
+            "Payment failed. Please try again with another method.",
+        );
+      });
+      razorpay.open();
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong");
-    } finally {
       setLoading(false);
     }
   };
@@ -275,7 +363,7 @@ function PlaceOrder() {
           {/* ── COD Note ── */}
           <div
             style={{
-              background: "#FEF3C7",
+              background: "var(--primary-fixed)",
               borderRadius: "var(--radius-lg)",
               padding: "clamp(12px, 3vw, 14px) clamp(12px, 3.5vw, 16px)",
               marginBottom: "clamp(16px, 4vw, 22px)",
@@ -283,7 +371,7 @@ function PlaceOrder() {
               alignItems: "flex-start",
               gap: "clamp(8px, 2.5vw, 10px)",
               fontSize: "clamp(0.72rem, 2.1vw, 0.8125rem)",
-              color: "#92400E",
+              color: "var(--primary-container)",
               fontWeight: 600,
             }}>
             <div
@@ -291,21 +379,21 @@ function PlaceOrder() {
                 width: "clamp(28px, 8vw, 32px)",
                 height: "clamp(28px, 8vw, 32px)",
                 borderRadius: "var(--radius-md)",
-                background: "#FDE68A",
+                background: "var(--primary-fixed-dim)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 flexShrink: 0,
               }}>
-              <Banknote size={17} color='#92400E' />
+              <CreditCard size={17} color='var(--primary-container)' />
             </div>
             <div>
               <div style={{ fontWeight: 700, marginBottom: "1px" }}>
-                Cash on Delivery
+                Secure Online Payment
               </div>
               <div
                 style={{ fontWeight: 500, opacity: 0.8, fontSize: "0.75rem" }}>
-                Pay when your food arrives
+                Pay safely with Razorpay test mode
               </div>
             </div>
           </div>
@@ -338,10 +426,10 @@ function PlaceOrder() {
                     animation: "spin 0.7s linear infinite",
                   }}
                 />
-                Placing order…
+                Opening payment...
               </span>
             ) : (
-              `Place Order · ₹${totalAmount}`
+              `Pay Online - Rs.${totalAmount}`
             )}
           </button>
         </form>

@@ -102,9 +102,10 @@ function Register() {
                   </span>
                   <input
                     className='inp-field'
-                    type='text'
-                    name='name'
-                    value={formData.name}
+                  type='text'
+                  name='name'
+                  autoComplete='name'
+                  value={formData.name}
                     onChange={handleChange}
                     placeholder='John Doe'
                     required
@@ -119,9 +120,10 @@ function Register() {
                   </span>
                   <input
                     className='inp-field'
-                    type='text'
-                    name='city'
-                    value={formData.city}
+                  type='text'
+                  name='city'
+                  autoComplete='address-level2'
+                  value={formData.city}
                     onChange={handleChange}
                     placeholder='Surat'
                     required
@@ -138,6 +140,7 @@ function Register() {
                   className='inp-field'
                   type='email'
                   name='email'
+                  autoComplete='email'
                   value={formData.email}
                   onChange={handleChange}
                   placeholder='you@example.com'
@@ -154,6 +157,7 @@ function Register() {
                   className='inp-field'
                   type={showPassword ? "text" : "password"}
                   name='password'
+                  autoComplete='new-password'
                   value={formData.password}
                   onChange={handleChange}
                   placeholder='Min 6 characters'
@@ -194,6 +198,7 @@ function Register() {
                   className='inp-field'
                   type='text'
                   name='phone'
+                  autoComplete='tel'
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder='0123456789'

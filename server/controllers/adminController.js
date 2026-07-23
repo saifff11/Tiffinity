@@ -111,14 +111,209 @@ export const getAllUsers = async (req, res) => {
 // @route   GET /api/admin/stats
 export const getStats = async (req, res) => {
   try {
-    const totalUsers = await User.countDocuments({ role: 'customer' })
-    const totalCooks = await CookProfile.countDocuments({ isVerified: true })
-    const pendingCooks = await CookProfile.countDocuments({ isVerified: false })
+    const startDate = new Date()
+    startDate.setDate(startDate.getDate() - 6)
+    startDate.setHours(0, 0, 0, 0)
+
+    const [
+      totalUsers,
+      totalCooks,
+      pendingCooks,
+      totalOrders,
+      activeOrders,
+      deliveredOrders,
+      cancelledOrders,
+      paidOrders,
+      revenueResult,
+      statusBreakdown,
+      paymentBreakdown,
+      roleBreakdown,
+      cityBreakdown,
+      mealTypeBreakdown,
+      last7DaysOrders
+    ] = await Promise.all([
+      User.countDocuments({ role: 'customer' }),
+      CookProfile.countDocuments({ isVerified: true }),
+      CookProfile.countDocuments({ isVerified: false }),
+      Order.countDocuments(),
+      Order.countDocuments({
+        status: { $in: ['pending', 'confirmed', 'preparing', 'ready'] }
+      }),
+      Order.countDocuments({ status: 'delivered' }),
+      Order.countDocuments({ status: 'cancelled' }),
+      Order.countDocuments({ paymentStatus: 'paid' }),
+      Order.aggregate([
+        { $match: { paymentStatus: 'paid' } },
+        { $group: { _id: null, total: { $sum: '$totalAmount' } } }
+      ]),
+      Order.aggregate([
+        { $group: { _id: '$status', count: { $sum: 1 } } },
+        { $sort: { count: -1 } }
+      ]),
+      Order.aggregate([
+        { $group: { _id: '$paymentStatus', count: { $sum: 1 } } },
+        { $sort: { count: -1 } }
+      ]),
+      User.aggregate([
+        { $group: { _id: '$role', count: { $sum: 1 } } },
+        { $sort: { count: -1 } }
+      ]),
+      User.aggregate([
+        { $match: { city: { $ne: null } } },
+        { $group: { _id: '$city', count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+        { $limit: 6 }
+      ]),
+      Order.aggregate([
+        {
+          $lookup: {
+            from: 'menus',
+            localField: 'menuId',
+            foreignField: '_id',
+            as: 'menu'
+          }
+        },
+        { $unwind: { path: '$menu', preserveNullAndEmptyArrays: true } },
+        { $group: { _id: '$menu.mealType', count: { $sum: 1 }, revenue: { $sum: '$totalAmount' } } },
+        { $sort: { count: -1 } }
+      ]),
+      Order.aggregate([
+        { $match: { createdAt: { $gte: startDate } } },
+        {
+          $group: {
+            _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
+            orders: { $sum: 1 },
+            revenue: {
+              $sum: {
+                $cond: [{ $eq: ['$paymentStatus', 'paid'] }, '$totalAmount', 0]
+              }
+            }
+          }
+        },
+        { $sort: { _id: 1 } }
+      ])
+    ])
+
+    const last7Days = Array.from({ length: 7 }, (_, index) => {
+      const date = new Date(startDate)
+      date.setDate(startDate.getDate() + index)
+      const key = date.toISOString().slice(0, 10)
+      const found = last7DaysOrders.find(item => item._id === key)
+
+      return {
+        date: key,
+        label: date.toLocaleDateString('en-IN', { weekday: 'short' }),
+        orders: found?.orders || 0,
+        revenue: found?.revenue || 0
+      }
+    })
+
+    const totalRevenue = revenueResult[0]?.total || 0
+    const completionRate = totalOrders ? Math.round((deliveredOrders / totalOrders) * 100) : 0
+    const cancellationRate = totalOrders ? Math.round((cancelledOrders / totalOrders) * 100) : 0
 
     res.status(200).json({
       success: true,
-      stats: { totalUsers, totalCooks, pendingCooks }
+      stats: {
+        totalUsers,
+        totalCooks,
+        pendingCooks,
+        totalOrders,
+        activeOrders,
+        deliveredOrders,
+        cancelledOrders,
+        paidOrders,
+        totalRevenue,
+        completionRate,
+        cancellationRate,
+        analytics: {
+          statusBreakdown,
+          paymentBreakdown,
+          roleBreakdown,
+          cityBreakdown,
+          mealTypeBreakdown,
+          last7Days
+        }
+      }
     })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
+
+// @desc    Get all orders with admin filters
+// @route   GET /api/admin/orders
+export const getAllOrders = async (req, res) => {
+  try {
+    const {
+      status,
+      paymentStatus,
+      mealType,
+      city,
+      search,
+      dateFrom,
+      dateTo
+    } = req.query
+
+    const query = {}
+
+    if (status && status !== 'all') query.status = status
+    if (paymentStatus && paymentStatus !== 'all') query.paymentStatus = paymentStatus
+
+    if (dateFrom || dateTo) {
+      query.createdAt = {}
+      if (dateFrom) query.createdAt.$gte = new Date(`${dateFrom}T00:00:00.000Z`)
+      if (dateTo) query.createdAt.$lte = new Date(`${dateTo}T23:59:59.999Z`)
+    }
+
+    let orders = await Order.find(query)
+      .populate('customerId', 'name email phone city')
+      .populate({
+        path: 'cookId',
+        select: 'city address cuisineType photo rating',
+        populate: { path: 'userId', select: 'name email phone city' }
+      })
+      .populate('menuId', 'date mealType cutoffTime')
+      .sort({ createdAt: -1 })
+
+    if (mealType && mealType !== 'all') {
+      orders = orders.filter(order => order.menuId?.mealType === mealType)
+    }
+
+    if (city?.trim()) {
+      const cityRegex = new RegExp(city.trim(), 'i')
+      orders = orders.filter(order =>
+        cityRegex.test(order.customerId?.city || '') ||
+        cityRegex.test(order.cookId?.city || '') ||
+        cityRegex.test(order.cookId?.userId?.city || '')
+      )
+    }
+
+    if (search?.trim()) {
+      const searchRegex = new RegExp(search.trim(), 'i')
+      orders = orders.filter(order =>
+        searchRegex.test(order.dish?.name || '') ||
+        searchRegex.test(order.customerId?.name || '') ||
+        searchRegex.test(order.customerId?.email || '') ||
+        searchRegex.test(order.cookId?.userId?.name || '') ||
+        searchRegex.test(order.cookId?.userId?.email || '') ||
+        searchRegex.test(order.paymentId || '') ||
+        searchRegex.test(order._id.toString())
+      )
+    }
+
+    const summary = {
+      total: orders.length,
+      active: orders.filter(order => ['pending', 'confirmed', 'preparing', 'ready'].includes(order.status)).length,
+      delivered: orders.filter(order => order.status === 'delivered').length,
+      cancelled: orders.filter(order => order.status === 'cancelled').length,
+      paid: orders.filter(order => order.paymentStatus === 'paid').length,
+      revenue: orders
+        .filter(order => order.paymentStatus === 'paid')
+        .reduce((sum, order) => sum + order.totalAmount, 0)
+    }
+
+    res.status(200).json({ success: true, orders, summary })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }

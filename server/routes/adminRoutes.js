@@ -4,6 +4,7 @@ import {
   verifyCook,
   rejectCook,
   getAllUsers,
+  getAllOrders,
   getStats,
   banUser,
   getUserDetails
@@ -22,6 +23,7 @@ router.get('/cooks/pending', getPendingCooks)
 router.put('/cooks/:id/verify', verifyCook)
 router.put('/cooks/:id/reject', rejectCook)
 router.get('/users', getAllUsers)
+router.get('/orders', getAllOrders)
 router.get('/stats', getStats)
 router.put('/users/:id/ban', banUser)
 router.delete('/users/:id', deleteUser)

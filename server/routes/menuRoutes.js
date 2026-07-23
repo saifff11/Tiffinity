@@ -13,8 +13,10 @@ import { authorizeRoles } from '../middleware/roleMiddleware.js'
 
 const router = express.Router()
 
+// Customer discovery routes
+router.get('/all', protect, authorizeRoles('customer'), getAllMenus)
+
 // Public routes
-router.get('/all', getAllMenus)
 router.get('/today/:cookId', getTodayMenu)
 
 // Cook only routes

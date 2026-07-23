@@ -35,6 +35,8 @@ function CookOrders() {
   const [activeTab, setActiveTab] = useState("orders");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [confirmAcceptId, setConfirmAcceptId] = useState(null);
+  const [confirmRejectId, setConfirmRejectId] = useState(null);
   const [confirmCancelId, setConfirmCancelId] = useState(null);
   const [confirmStatusUpdate, setConfirmStatusUpdate] = useState(null);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -107,6 +109,39 @@ function CookOrders() {
     }
   };
 
+  const handleAcceptOrder = async () => {
+    try {
+      const { data } = await axiosInstance.put(
+        `/orders/${confirmAcceptId}/accept`,
+      );
+      setOrders(
+        orders.map((o) => (o._id === confirmAcceptId ? data.order : o)),
+      );
+      setSuccess("Order accepted successfully!");
+      setConfirmAcceptId(null);
+    } catch (err) {
+      setError(err.response?.data?.message || "Something went wrong");
+      setConfirmAcceptId(null);
+    }
+  };
+
+  const handleRejectOrder = async () => {
+    try {
+      const { data } = await axiosInstance.put(
+        `/orders/${confirmRejectId}/reject`,
+        { reason: "Cook is unable to prepare this order" },
+      );
+      setOrders(
+        orders.map((o) => (o._id === confirmRejectId ? data.order : o)),
+      );
+      setSuccess("Order rejected successfully!");
+      setConfirmRejectId(null);
+    } catch (err) {
+      setError(err.response?.data?.message || "Something went wrong");
+      setConfirmRejectId(null);
+    }
+  };
+
   const handleCancelOrder = async () => {
     try {
       await axiosInstance.put(`/orders/${confirmCancelId}/status`, {
@@ -140,6 +175,10 @@ function CookOrders() {
 
   const statusStyle = (status) => {
     const map = {
+      pending: {
+        bg: "var(--surface-container-high)",
+        color: "var(--outline)",
+      },
       confirmed: {
         bg: "var(--primary-fixed)",
         color: "var(--primary-container)",
@@ -584,7 +623,10 @@ function CookOrders() {
                               color: "var(--on-surface-variant)",
                             }}>
                             Qty: {order.quantity} &nbsp;·&nbsp; ₹
-                            {order.totalAmount} &nbsp;·&nbsp; COD
+                            {order.totalAmount} &nbsp;·&nbsp;{" "}
+                            {order.paymentStatus === "paid"
+                              ? "Paid online"
+                              : "Payment pending"}
                           </p>
                         </div>
                         {/* Status badge */}
@@ -680,6 +722,47 @@ function CookOrders() {
                             gap: "8px",
                             flexWrap: "wrap",
                           }}>
+                          {order.status === "pending" && (
+                            <>
+                              <button
+                                onClick={() => setConfirmAcceptId(order._id)}
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: "6px",
+                                  padding: "8px 16px",
+                                  borderRadius: "var(--radius-lg)",
+                                  background: "var(--primary-fixed)",
+                                  color: "var(--primary-container)",
+                                  border: "none",
+                                  cursor: "pointer",
+                                  fontFamily: "var(--font-display)",
+                                  fontWeight: 700,
+                                  fontSize: "0.8125rem",
+                                }}>
+                                <CheckCircle2 size={14} /> Accept Order
+                              </button>
+                              <button
+                                onClick={() => setConfirmRejectId(order._id)}
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: "6px",
+                                  padding: "8px 16px",
+                                  borderRadius: "var(--radius-lg)",
+                                  background: "#fee2e2",
+                                  color: "#991b1b",
+                                  border: "none",
+                                  cursor: "pointer",
+                                  fontFamily: "var(--font-display)",
+                                  fontWeight: 700,
+                                  fontSize: "0.8125rem",
+                                }}>
+                                <XCircle size={14} /> Reject Order
+                              </button>
+                            </>
+                          )}
+
                           {next && (
                             <button
                               onClick={() =>
@@ -976,6 +1059,24 @@ function CookOrders() {
             confirmColor='#DC2626'
             onConfirm={handleCancelOrder}
             onCancel={() => setConfirmCancelId(null)}
+          />
+        )}
+        {confirmAcceptId && (
+          <ConfirmDialog
+            message='Accept this order and confirm it for the customer?'
+            confirmLabel='Accept Order'
+            confirmColor='var(--success)'
+            onConfirm={handleAcceptOrder}
+            onCancel={() => setConfirmAcceptId(null)}
+          />
+        )}
+        {confirmRejectId && (
+          <ConfirmDialog
+            message='Reject this order? The reserved portions will be restored.'
+            confirmLabel='Reject Order'
+            confirmColor='#DC2626'
+            onConfirm={handleRejectOrder}
+            onCancel={() => setConfirmRejectId(null)}
           />
         )}
         {confirmStatusUpdate && (

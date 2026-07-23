@@ -38,6 +38,7 @@ import CookOrders from "./pages/cook/CookOrders";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import PendingCooks from "./pages/admin/PendingCooks";
 import UserDetails from "./pages/admin/UserDetails";
+import AdminOrders from "./pages/admin/AdminOrders";
 
 // 404
 import NotFound from "./pages/misc/NotFound";
@@ -62,6 +63,7 @@ const PAGE_TITLES = {
   "/cook/orders": "Cook Orders | Tiffinity",
   "/admin/dashboard": "Admin Dashboard | Tiffinity",
   "/admin/pending-cooks": "Pending Cooks | Tiffinity",
+  "/admin/orders": "All Orders | Tiffinity",
 };
 
 function TitleManager() {
@@ -226,6 +228,14 @@ function App() {
           element={
             <ProtectedRoute roles={["admin"]}>
               <PendingCooks />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/orders"
+          element={
+            <ProtectedRoute roles={["admin"]}>
+              <AdminOrders />
             </ProtectedRoute>
           }
         />
