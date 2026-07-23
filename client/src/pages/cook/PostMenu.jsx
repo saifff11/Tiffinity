@@ -272,7 +272,7 @@ function PostMenu() {
             whiteSpace: "nowrap",
             cursor: "pointer",
           }}>
-          TiffinBox
+          Tiffinity
         </span>
 
         <div

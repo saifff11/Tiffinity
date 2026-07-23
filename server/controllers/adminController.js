@@ -37,12 +37,12 @@ export const verifyCook = async (req, res) => {
     // Send approval email without blocking the admin action.
     void sendEmail(
       cookProfile.userId.email,
-      'Your TiffinBox cook profile is approved! 🎉',
+      'Your Tiffinity cook profile is approved! 🎉',
       'You are approved! 🎉',
       `
     <p class="text">Congratulations ${cookProfile.userId.name}!</p>
-    <p class="text">Your cook profile has been <strong>approved</strong> by the TiffinBox team. You can now start posting your daily menu and accepting orders.</p>
-    <p class="text">Welcome to the TiffinBox family! </p>
+    <p class="text">Your cook profile has been <strong>approved</strong> by the Tiffinity team. You can now start posting your daily menu and accepting orders.</p>
+    <p class="text">Welcome to the Tiffinity family! </p>
   `
     ).catch(error => {
       console.error('Failed to send cook approval email:', error.message)
@@ -71,7 +71,7 @@ export const rejectCook = async (req, res) => {
     // Send rejection email without blocking profile rejection.
     void sendEmail(
       cookProfile.userId.email,
-      'TiffinBox cook profile update',
+      'Tiffinity cook profile update',
       'Profile Not Approved',
       `
     <p class="text">Hi ${cookProfile.userId.name},</p>

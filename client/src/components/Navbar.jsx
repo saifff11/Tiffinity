@@ -113,7 +113,7 @@ function Navbar({ showBack, backPath, backLabel }) {
             userSelect: "none",
             whiteSpace: "nowrap",
           }}>
-          TiffinBox
+          Tiffinity
         </span>
 
         {/* Right side */}

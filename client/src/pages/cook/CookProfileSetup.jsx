@@ -110,7 +110,7 @@ function CookProfileSetup() {
           className='dashboard-navbar-brand'
           style={{ cursor: "pointer" }}
           onClick={() => navigate("/")}>
-          TiffinBox
+          Tiffinity
         </div>
         <div className='dashboard-navbar-right'>
           <button

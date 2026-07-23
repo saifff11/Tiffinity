@@ -59,7 +59,7 @@ const MiscNavbar = () => {
             whiteSpace: "nowrap",
             flex: "0 0 auto",
           }}>
-          TiffinBox
+          Tiffinity
         </span>
 
         {/* center - desktop only */}

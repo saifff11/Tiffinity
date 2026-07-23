@@ -517,7 +517,7 @@
 //                 <h3
 //                   className='auth-right-headline'
 //                   style={{ fontSize: "1.75rem", marginBottom: "1rem" }}>
-//                   Mastering the TiffinBox Kitchen
+//                   Mastering the Tiffinity Kitchen
 //                 </h3>
 //                 <p
 //                   style={{

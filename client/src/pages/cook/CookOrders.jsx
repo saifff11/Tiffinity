@@ -296,7 +296,7 @@ function CookOrders() {
               whiteSpace: "nowrap",
               cursor: "pointer",
             }}>
-            TiffinBox
+            Tiffinity
           </span>
 
           <div

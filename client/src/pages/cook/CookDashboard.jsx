@@ -334,7 +334,7 @@ function CookDashboard() {
             whiteSpace: "nowrap",
             cursor: "pointer",
           }}>
-          TiffinBox
+          Tiffinity
         </span>
 
         <div

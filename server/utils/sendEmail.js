@@ -22,7 +22,7 @@ const emailTemplate = (title, body) => `
 <body>
   <div class="container">
     <div class="header">
-      <div class="header-logo">TiffinBox</div>
+      <div class="header-logo">Tiffinity</div>
       <div class="header-tagline">Taste the home you miss.</div>
     </div>
 
@@ -33,7 +33,7 @@ const emailTemplate = (title, body) => `
 
     <div class="footer">
       <div class="footer-text">
-        © 2026 TiffinBox · Fresh homemade meals delivered to your door
+        © 2026 Tiffinity · Fresh homemade meals delivered to your door
       </div>
 
       <div class="footer-text" style="margin-top: 4px;">

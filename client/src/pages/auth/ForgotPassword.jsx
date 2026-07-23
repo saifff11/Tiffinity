@@ -84,7 +84,7 @@ function ForgotPassword() {
           alt='Fresh food'
         />
         <div className='auth-right-content'>
-          <div className='auth-right-brand'>TiffinBox</div>
+          <div className='auth-right-brand'>Tiffinity</div>
 
           <div>
             <div className='auth-right-headline'>

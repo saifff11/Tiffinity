@@ -38,7 +38,7 @@ const HowItWorks = () => {
                 color: "var(--on-surface)",
                 fontSize: "clamp(3rem, 8vw, 4.5rem)",
               }}>
-              How TiffinBox
+              How Tiffinity
               <br />
               <span
                 className='auth-right-headline'
@@ -285,7 +285,7 @@ const HowItWorks = () => {
                   </h4>
                   <p className='auth-page-sub'>
                     Traditional tiffin services send you whatever they decide.
-                    TiffinBox subscribers choose every single day. Same
+                    Tiffinity subscribers choose every single day. Same
                     subscription price. Completely different experience.
                   </p>
                   <div className='auth-features'>

@@ -48,7 +48,7 @@ function Register() {
           </span>
 
           <div className='auth-brand'>
-            TiffinBox
+            Tiffinity
             <span className='auth-brand-dot' />
           </div>
 
@@ -218,7 +218,7 @@ function Register() {
               color: "var(--on-surface-variant)",
             }}>
             By creating an account you confirm you have read and accepted
-            TiffinBox's
+            Tiffinity's
             <Link
               to='/terms-and-conditions'
               target='_blank'
@@ -263,7 +263,7 @@ function Register() {
           alt='Homemade food spread'
         />
         <div className='auth-right-content' style={{ marginBottom: "35px" }}>
-          <div className='auth-right-brand'>TiffinBox</div>
+          <div className='auth-right-brand'>Tiffinity</div>
 
             <div >
               <div className='auth-right-headline'>

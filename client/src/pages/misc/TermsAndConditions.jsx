@@ -117,7 +117,7 @@ function TermsAndConditions() {
                   margin: isMobile ? "0 auto" : 0,
                 }}>
                 Last Updated: April 01, 2026. These terms govern your use of
-                TiffinBox's platform and services. Please read them carefully.
+                Tiffinity's platform and services. Please read them carefully.
               </p>
             </header>
 
@@ -357,7 +357,7 @@ function TermsAndConditions() {
                       {[
                         {
                           term: '"Company"',
-                          def: "Refers to TiffinBox, its subsidiaries, and affiliates.",
+                          def: "Refers to Tiffinity, its subsidiaries, and affiliates.",
                         },
                         {
                           term: '"Service"',
@@ -682,7 +682,7 @@ function TermsAndConditions() {
                         opacity: 0.88,
                       }}>
                       TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW,
-                      TIFFINBOX SHALL NOT BE LIABLE FOR ANY INDIRECT,
+                      Tiffinity SHALL NOT BE LIABLE FOR ANY INDIRECT,
                       INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES,
                       OR ANY LOSS OF PROFITS OR REVENUES, WHETHER INCURRED
                       DIRECTLY OR INDIRECTLY.
@@ -734,7 +734,7 @@ function TermsAndConditions() {
                     and obligations.
                   </p>
                   <a
-                    href='mailto:legal@tiffinbox.in'
+                    href='mailto:legal@Tiffinity.in'
                     className='auth-btn'
                     style={{
                       display: "inline-flex",

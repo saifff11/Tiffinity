@@ -325,7 +325,7 @@ function Landing() {
               </div>
               <div style={{ flex: "1 1 400px", minHeight: "260px" }}>
                 <img
-                  src='https://res.cloudinary.com/dipcaws84/image/upload/v1775108514/tiffinbox/cooks/punr6uiltmsfmxxw1unu.jpg'
+                  src='https://res.cloudinary.com/dipcaws84/image/upload/v1775108514/Tiffinity/cooks/punr6uiltmsfmxxw1unu.jpg'
                   alt='Cooking'
                   style={{
                     width: "100%",

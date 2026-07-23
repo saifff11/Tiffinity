@@ -189,7 +189,7 @@ const legacyPlaceOrder = async (req, res) => {
       'New order received! ',
       'You have a new order!',
       `
-    <p class="text">Hi ${cookData.userId.name}, you have a new order on TiffinBox!</p>
+    <p class="text">Hi ${cookData.userId.name}, you have a new order on Tiffinity!</p>
     <div class="highlight">
       <div class="highlight-row"><span class="highlight-label">Dish:&nbsp;</span><span class="highlight-value">${dish.name}</span></div>
       <div class="highlight-row"><span class="highlight-label">Quantity:&nbsp;</span><span class="highlight-value">${quantity}</span></div>
@@ -559,7 +559,7 @@ export const updateOrderStatus = async (req, res) => {
     // Send email after the API response so order status updates are not blocked by SMTP issues.
     void sendEmail(
       order.customerId.email,
-      `Your TiffinBox order is ${status}!`,
+      `Your Tiffinity order is ${status}!`,
       `Order ${status.charAt(0).toUpperCase() + status.slice(1)}!`,
       `
     <p class="text">Hi ${order.customerId.name},</p>

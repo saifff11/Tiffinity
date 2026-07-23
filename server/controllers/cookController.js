@@ -21,7 +21,7 @@ export const createCookProfile = async (req, res) => {
     if (req.file) {
       const result = await new Promise((resolve, reject) => {
         cloudinary.uploader.upload_stream(
-          { folder: 'tiffinbox/cooks' },
+          { folder: 'Tiffinity/cooks' },
           (error, result) => {
             if (error) reject(error)
             else resolve(result)
@@ -100,7 +100,7 @@ export const updateCookProfile = async (req, res) => {
     if (req.file) {
       const result = await new Promise((resolve, reject) => {
         cloudinary.uploader.upload_stream(
-          { folder: 'tiffinbox/cooks' },
+          { folder: 'Tiffinity/cooks' },
           (error, result) => {
             if (error) reject(error)
             else resolve(result)

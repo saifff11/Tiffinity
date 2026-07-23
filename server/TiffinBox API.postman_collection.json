@@ -1,8 +1,8 @@
 {
   "info": {
     "_postman_id": "fef28a22-155e-417d-be2e-2a1176d386cd",
-    "name": "TiffinBox API",
-    "description": "Complete API collection for TiffinBox project",
+    "name": "Tiffinity API",
+    "description": "Complete API collection for Tiffinity project",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "52822747",
     "_collection_link": "https://go.postman.co/collection/52822747-fef28a22-155e-417d-be2e-2a1176d386cd?source=collection_link"

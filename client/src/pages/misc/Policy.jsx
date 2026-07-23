@@ -97,7 +97,7 @@ function Policy() {
                 fontSize: isMobile ? "0.9375rem" : "1rem",
                 lineHeight: 1.75,
               }}>
-              Last updated: March 25, 2026. At TiffinBox, your privacy is our
+              Last updated: March 25, 2026. At Tiffinity, your privacy is our
               most precious asset. We transmute complex data handling into
               clear, simple promises.
             </p>
@@ -326,7 +326,7 @@ function Policy() {
                     Welcome to{" "}
                     <strong
                       style={{ color: "var(--on-surface)", fontWeight: 700 }}>
-                      TiffinBox
+                      Tiffinity
                     </strong>
                     . This Privacy Policy describes how your personal
                     information is collected, used, and shared when you visit or
@@ -644,7 +644,7 @@ function Policy() {
                       alignItems: isMobile ? "flex-start" : "center",
                     }}>
                     <a
-                      href='mailto:privacy@tiffinbox.in'
+                      href='mailto:privacy@Tiffinity.in'
                       style={{
                         display: "flex",
                         alignItems: "center",

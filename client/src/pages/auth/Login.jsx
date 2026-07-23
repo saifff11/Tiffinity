@@ -49,7 +49,7 @@ function Login() {
             <ArrowLeft size={14} /> Back to Home page
           </span>
           <div className='auth-brand'>
-            TiffinBox
+            Tiffinity
             <span className='auth-brand-dot' />
           </div>
 
@@ -150,7 +150,7 @@ function Login() {
           alt='Fresh tiffin meals'
         />
         <div className='auth-right-content'>
-          <div className='auth-right-brand'>TiffinBox</div>
+          <div className='auth-right-brand'>Tiffinity</div>
 
           <div style={{ marginBottom: "35px" }}>
             <div className='auth-right-headline'>

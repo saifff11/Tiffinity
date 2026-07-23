@@ -52,7 +52,7 @@ const Footer = () => {
                 fontSize: "clamp(0.95rem, 2vw, 1.05rem)",
                 marginBottom: "4px",
               }}>
-              TiffinBox
+              Tiffinity
             </p>
             <p
               className='text-xs sm:text-sm'
@@ -60,7 +60,7 @@ const Footer = () => {
                 fontSize: "clamp(0.75rem, 1.5vw, 0.8125rem)",
                 color: "var(--on-surface-variant)",
               }}>
-              © 2026 TiffinBox. All rights reserved.
+              © 2026 Tiffinity. All rights reserved.
             </p>
           </div>
 
@@ -160,7 +160,7 @@ export default Footer;
 
 // const socialLinks = [
 //   { icon: "language",   label: "Website", href: "#" },
-//   { icon: "mail",       label: "Email",   href: "mailto:hello@tiffinbox.in" },
+//   { icon: "mail",       label: "Email",   href: "mailto:hello@Tiffinity.in" },
 //   { icon: "smartphone", label: "App",     href: "#" },
 // ];
 
@@ -217,7 +217,7 @@ export default Footer;
 //                   color: "#fff",
 //                   letterSpacing: "-0.02em",
 //                 }}>
-//                   TiffinBox
+//                   Tiffinity
 //                 </span>
 //               </div>
 
@@ -380,7 +380,7 @@ export default Footer;
 //             gap: "16px",
 //           }}>
 //             <p style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,0.25)", fontFamily: "var(--font-body)" }}>
-//               © 2026 TiffinBox. All rights reserved. Made with ❤️ in India.
+//               © 2026 Tiffinity. All rights reserved. Made with ❤️ in India.
 //             </p>
 
 //             {/* Design system accent bars */}

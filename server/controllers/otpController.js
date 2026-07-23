@@ -76,7 +76,7 @@ export const resendOTP = async (req, res) => {
 
     void sendEmail(
       email,
-      'Your new TiffinBox OTP',
+      'Your new Tiffinity OTP',
       'New Verification OTP',
       `
     <p class="text">Your new verification OTP is:</p>
@@ -119,7 +119,7 @@ export const forgotPassword = async (req, res) => {
     // Send email
     void sendEmail(
       email,
-      'Reset your TiffinBox password',
+      'Reset your Tiffinity password',
       'Password Reset OTP',
       `
     <p class="text">Hi ${user.name}, we received a request to reset your password.</p>

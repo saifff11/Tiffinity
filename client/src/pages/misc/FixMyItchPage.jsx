@@ -452,7 +452,7 @@ function FixMyItchPage() {
           <Connector />
 
           {/* ═══════════════════════════════════════
-              SECTION 4 — The Solution: TiffinBox
+              SECTION 4 — The Solution: Tiffinity
           ═══════════════════════════════════════ */}
           <section
             style={{
@@ -471,7 +471,7 @@ function FixMyItchPage() {
                   maxWidth: "680px",
                 }}>
                 We already built the answer.{" "}
-                <span style={{ color: "var(--primary)" }}>Meet TiffinBox.</span>
+                <span style={{ color: "var(--primary)" }}>Meet Tiffinity.</span>
               </h2>
 
               <p
@@ -589,8 +589,8 @@ function FixMyItchPage() {
 
               <ScreenshotFrame
                 src='https://res.cloudinary.com/dipcaws84/image/upload/v1775467620/Screenshot_843_q0ict7.png'
-                alt='tiffinbox — landing page'
-                caption='TiffinBox landing page — live and deployed'
+                alt='Tiffinity — landing page'
+                caption='Tiffinity landing page — live and deployed'
                 highlight
               />
             </div>
@@ -618,7 +618,7 @@ function FixMyItchPage() {
                 Built, designed, and shipped.
               </h2>
               <a
-                href='https://github.com/shubham99k/tiffinbox'
+                href='https://github.com/shubham99k/Tiffinity'
                 target='_blank'
                 rel='noopener noreferrer'
                 style={{
@@ -658,12 +658,12 @@ function FixMyItchPage() {
                 }}>
                 <ScreenshotFrame
                   src='https://res.cloudinary.com/dipcaws84/image/upload/v1775458853/Screenshot_841_m7zjyf.png'
-                  alt='TiffinBox — Sign Up'
+                  alt='Tiffinity — Sign Up'
                   caption='Sign up as a customer or cook'
                 />
                 <ScreenshotFrame
                   src='https://res.cloudinary.com/dipcaws84/image/upload/v1775458868/Screenshot_840_voimye.png'
-                  alt='TiffinBox — Login'
+                  alt='Tiffinity — Login'
                   caption='Log back in anytime'
                 />
               </div>
@@ -697,7 +697,7 @@ function FixMyItchPage() {
                       margin: 0,
                       maxWidth: "400px",
                     }}>
-                    Join TiffinBox and never eat something you didn't choose
+                    Join Tiffinity and never eat something you didn't choose
                     again.
                   </p>
                 </div>

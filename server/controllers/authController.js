@@ -28,10 +28,10 @@ export const register = async (req, res) => {
 
     void sendEmail(
       email,
-      'Verify your TiffinBox account',
-      'Welcome to TiffinBox! 👋',
+      'Verify your Tiffinity account',
+      'Welcome to Tiffinity! 👋',
       `
-    <p class="text">Hi ${name}, thanks for joining TiffinBox!</p>
+    <p class="text">Hi ${name}, thanks for joining Tiffinity!</p>
     <p class="text">Your verification OTP is:</p>
     <div class="highlight" style="text-align:center;">
       <div style="font-size: 36px; font-weight: 900; color: #047857; letter-spacing: 8px;">${otp}</div>
@@ -44,10 +44,10 @@ export const register = async (req, res) => {
 
     void sendEmail(
       process.env.ADMIN_EMAIL,
-      'New user registered on TiffinBox',
+      'New user registered on Tiffinity',
       'New User Alert 🚨',
       `
-    <p class="text">A new user has registered on TiffinBox.</p>
+    <p class="text">A new user has registered on Tiffinity.</p>
     <p class="text">User Details:</p>
     <ul>
       <li><strong>Name:</strong> ${name}</li>
@@ -100,7 +100,7 @@ export const login = async (req, res) => {
 
       void sendEmail(
         email,
-        'Verify your TiffinBox account',
+        'Verify your Tiffinity account',
         'Your new OTP 🔑',
         `
     <p class="text">Hi ${user.name}, you tried to log in but your email isn't verified yet.</p>
@@ -122,8 +122,8 @@ export const login = async (req, res) => {
     //  Only send login notification email after all checks pass
     // void sendEmail(
     //   email,
-    //   'New login to your TiffinBox account',
-    //   'TiffinBox Login Alert 🔔',
+    //   'New login to your Tiffinity account',
+    //   'Tiffinity Login Alert 🔔',
     //   `
     //   <p class="text">Hi ${user.name}, a new login was detected on your account.</p>
     //   <p class="text">If this was you, no action is needed.</p>
