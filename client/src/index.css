@@ -54,33 +54,33 @@ body {
 ═══════════════════════════════════════════════════════ */
 :root {
   /* ── Core Palette ── */
-  --primary: #059669; /* action green */
-  --primary-container: #064e3b; /* anchor / prestige */
-  --primary-dim: #047857; /* hover tier */
-  --primary-fixed: #d1fae5; /* subtle bg tint */
-  --primary-fixed-dim: #a7f3d0;
-  --on-primary: #f0fdf4;
+  --primary: #e11d48; /* pomegranate: orders and primary actions */
+  --primary-container: #9f1239; /* deep berry: headings and anchors */
+  --primary-dim: #be123c; /* hover tier */
+  --primary-fixed: #ffe4e6; /* subtle brand tint */
+  --primary-fixed-dim: #fecdd3;
+  --on-primary: #fff7f8;
 
-  --secondary: #006a63;
-  --secondary-fixed: #9cf2e8;
-  --secondary-fixed-dim: #5eead4;
+  --secondary: #15803d;
+  --secondary-fixed: #dcfce7;
+  --secondary-fixed-dim: #bbf7d0;
 
-  --tertiary: #0891b2;
-  --tertiary-fixed: #cffafe;
+  --tertiary: #b45309;
+  --tertiary-fixed: #fef3c7;
 
   /* ── Surfaces — Tonal Layering (no borders needed) ── */
-  --surface: #f9f9ff; /* Level 0: base */
-  --surface-container-low: #f1f3ff; /* Level 1: sections */
-  --surface-container: #e8eaf6; /* Level 2: raised */
+  --surface: #fafafa; /* Level 0: base */
+  --surface-container-low: #f4f4f5; /* Level 1: sections */
+  --surface-container: #e9eaec; /* Level 2: raised */
   --surface-container-lowest: #ffffff; /* Level 2: cards */
-  --surface-container-high: #dde1f8; /* inputs default */
-  --surface-dim: #d8daf5;
+  --surface-container-high: #dfe1e5; /* inputs default */
+  --surface-dim: #d4d4d8;
 
   /* ── Text ── */
-  --on-surface: #141b2b; /* primary text — NOT pure black */
-  --on-surface-variant: #404944; /* body copy, reduced strain */
-  --outline: #6b7280;
-  --outline-variant: rgba(107, 114, 128, 0.15); /* ghost border */
+  --on-surface: #201a1c; /* primary text, not pure black */
+  --on-surface-variant: #575154;
+  --outline: #746b6f;
+  --outline-variant: rgba(116, 107, 111, 0.16); /* ghost border */
 
   /* ── Brand CTA Gradient ── */
   --cta-gradient: linear-gradient(
@@ -93,9 +93,9 @@ body {
   --error: #dc2626;
   --error-bg: #fef2f2;
   --error-border: rgba(220, 38, 38, 0.2);
-  --success: #059669;
+  --success: #15803d;
   --success-bg: #f0fdf4;
-  --success-border: rgba(5, 150, 105, 0.2);
+  --success-border: rgba(21, 128, 61, 0.2);
 
   /* ── Typography ── */
   --font-display: "Manrope", sans-serif;
@@ -116,11 +116,11 @@ body {
   --radius-pill: 9999px; /* chips & tags only */
 
   /* ── Legacy compat for non-auth pages ── */
-  --brand: #059669;
-  --brand-dark: #047857;
-  --brand-light: #d1fae5;
-  --brand-pale: #f0fdf4;
-  --brand-container: #9cf2e8;
+  --brand: #e11d48;
+  --brand-dark: #be123c;
+  --brand-light: #ffe4e6;
+  --brand-pale: #fff1f2;
+  --brand-container: #fecdd3;
   --bg: var(--surface);
   --surface-low: var(--surface-container-low);
   --surface-mid: var(--surface-container);
@@ -131,7 +131,54 @@ body {
   --subtle: var(--outline);
   --border: transparent;
   --border-light: var(--outline-variant);
-  --yellow: #fcd34d;
+  --yellow: #f59e0b;
+  --nav-background: rgba(250, 250, 250, 0.88);
+  --nav-border: rgba(32, 26, 28, 0.08);
+  --theme-toggle-shadow: 0 8px 24px rgba(65, 20, 31, 0.16);
+}
+
+:root[data-theme="dark"] {
+  --primary: #fb7185;
+  --primary-container: #e11d48;
+  --primary-dim: #f43f5e;
+  --primary-fixed: #4c1524;
+  --primary-fixed-dim: #881337;
+  --on-primary: #fff7f8;
+
+  --secondary: #4ade80;
+  --secondary-fixed: #143d25;
+  --secondary-fixed-dim: #166534;
+  --tertiary: #fbbf24;
+  --tertiary-fixed: #4a3210;
+
+  --surface: #121214;
+  --surface-container-low: #19191c;
+  --surface-container: #232326;
+  --surface-container-lowest: #1e1e21;
+  --surface-container-high: #2d2d31;
+  --surface-dim: #0c0c0e;
+
+  --on-surface: #f8f5f6;
+  --on-surface-variant: #cec5c8;
+  --outline: #a89da1;
+  --outline-variant: rgba(232, 224, 227, 0.14);
+
+  --error: #f87171;
+  --error-bg: #3f1d24;
+  --error-border: rgba(248, 113, 113, 0.3);
+  --success: #4ade80;
+  --success-bg: #12321e;
+  --success-border: rgba(74, 222, 128, 0.3);
+
+  --brand: #fb7185;
+  --brand-dark: #f43f5e;
+  --brand-light: #4c1524;
+  --brand-pale: #32121b;
+  --brand-container: #881337;
+  --yellow: #fbbf24;
+  --nav-background: rgba(18, 18, 20, 0.9);
+  --nav-border: rgba(232, 224, 227, 0.1);
+  --theme-toggle-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
 }
 
 html {
@@ -150,6 +197,61 @@ body,
 
 body {
   overflow-x: hidden;
+}
+
+::selection {
+  background: var(--primary-fixed-dim);
+  color: var(--on-surface);
+}
+
+input[type="checkbox"],
+input[type="radio"],
+input[type="range"],
+progress {
+  accent-color: var(--primary);
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body,
+button,
+input,
+textarea,
+select {
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+.theme-toggle {
+  position: fixed;
+  right: clamp(14px, 3vw, 24px);
+  bottom: clamp(14px, 3vw, 24px);
+  z-index: 200;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-md);
+  background: var(--surface-container-lowest);
+  color: var(--on-surface);
+  box-shadow: var(--theme-toggle-shadow);
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  background: var(--surface-container-high);
+  color: var(--primary);
+}
+
+.theme-toggle:focus-visible {
+  outline: 3px solid var(--primary-fixed-dim);
+  outline-offset: 3px;
 }
 
 img,

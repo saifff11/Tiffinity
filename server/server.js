@@ -16,9 +16,6 @@ import startCronJobs from "./utils/cronJobs.js";
 
 dotenv.config();
 
-connectDB();
-startCronJobs();
-
 const app = express();
 
 app.use(
@@ -45,6 +42,18 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server running on port ${PORT}`);
-});
+const startServer = async () => {
+  try {
+    await connectDB();
+    startCronJobs();
+
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Server startup failed:", error.message);
+    process.exit(1);
+  }
+};
+
+startServer();

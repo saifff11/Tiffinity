@@ -80,10 +80,10 @@ function Navbar({ showBack, backPath, backLabel }) {
     <nav
       className='px-3 sm:px-4 md:px-6'
       style={{
-        background: "rgba(249,249,255,0.85)",
+        background: "var(--nav-background)",
         backdropFilter: "blur(16px)",
         WebkitBackdropFilter: "blur(16px)",
-        borderBottom: "1px solid rgba(20,27,43,0.06)",
+        borderBottom: "1px solid var(--nav-border)",
         padding: "clamp(8px, 2vw, 10px) clamp(12px, 4vw, 40px)",
         position: "sticky",
         top: 0,

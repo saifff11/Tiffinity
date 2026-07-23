@@ -21,10 +21,10 @@ const MiscNavbar = () => {
   return (
     <nav
       style={{
-        background: "rgba(249,249,255,0.85)",
+        background: "var(--nav-background)",
         backdropFilter: "blur(16px)",
         WebkitBackdropFilter: "blur(16px)",
-        borderBottom: "1px solid rgba(20,27,43,0.06)",
+        borderBottom: "1px solid var(--nav-border)",
         position: "sticky",
         top: 0,
         zIndex: 100,

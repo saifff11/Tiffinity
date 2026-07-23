@@ -13,6 +13,7 @@ import Footer from "./components/Footer";
 import Policy from "./pages/misc/Policy";
 import TermsAndConditions from "./pages/misc/TermsAndConditions";
 import FixMyItchPage from "./pages/misc/FixMyItchPage";
+import ThemeToggle from "./components/ThemeToggle";
 
 // Auth Pages
 import Login from "./pages/auth/Login";
@@ -87,6 +88,7 @@ function App() {
   return (
     <BrowserRouter>
       <TitleManager />
+      <ThemeToggle />
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/how-it-works" element={<HowItWorks />} />

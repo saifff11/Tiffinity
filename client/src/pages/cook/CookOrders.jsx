@@ -982,7 +982,7 @@ function CookOrders() {
           <ConfirmDialog
             message={`Mark this order as ${confirmStatusUpdate.status}?`}
             confirmLabel={`Mark as ${confirmStatusUpdate.status}`}
-            confirmColor='#059669'
+            confirmColor='var(--success)'
             onConfirm={handleStatusUpdate}
             onCancel={() => setConfirmStatusUpdate(null)}
           />
